@@ -1,0 +1,4 @@
+﻿enum GameEndState {
+    Clear,
+    OverAttempt
+}
