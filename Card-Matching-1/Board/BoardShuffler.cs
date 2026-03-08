@@ -1,8 +1,12 @@
 ﻿using System;
 
-static class Shuffle {
-    
-    public static void shuffle(int size, int colsize, out int[] result) {
+static class BoardShuffler {
+    /// <summary>
+    /// 사용할 카드 개수에 맞춰 인덱스를 랜덤하게 섞는다
+    /// </summary>
+    /// <param name="size">사용할 카드 크기</param>
+    /// <param name="result">섞인 인덱스가 들어갈 배열</param>
+    public static void shuffle(int size, out int[] result) {
         int[][] shuffleArr = new int[size][];
         Random rand = new Random();
 
