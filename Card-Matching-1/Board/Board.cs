@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Runtime.InteropServices.Marshalling;
 
 internal class Board {
     private ICard[] _cards;

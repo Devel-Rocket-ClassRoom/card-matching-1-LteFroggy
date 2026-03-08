@@ -1,6 +1,4 @@
-﻿
-
-abstract class GameModeBase {
+﻿abstract class GameModeBase {
     private readonly Difficulty _difficulty;
 
     protected int _matchCount;
