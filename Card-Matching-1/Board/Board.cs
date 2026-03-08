@@ -21,7 +21,7 @@ internal class Board {
     public Board(ICard[] cards, int boardSize) { 
         _cards = cards;
         _boardSize = boardSize;
-        BoardShuffler.shuffle(_boardSize, _colSize, out _shuffledIdx);
+        BoardShuffler.shuffle(_boardSize, out _shuffledIdx);
     }
 
     /// <summary>
