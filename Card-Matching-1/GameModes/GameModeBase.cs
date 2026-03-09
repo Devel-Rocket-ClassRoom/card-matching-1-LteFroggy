@@ -26,9 +26,9 @@
     /// 시작 시 로직이 필요한 모드들만 오버라이드해서 사용
     /// </summary>
     public virtual void Start() { }
-    public abstract void PrintGameRule();
+    public abstract string GetGameRule();
     public abstract GameState GetGameState();
-    public abstract void PrintStatusText();
-    public abstract void PrintGameResult(GameState endState);
+    public abstract string GetStatusText();
+    public abstract string GetGameResult(GameState endState);
     public abstract string UpdateGame(bool matched);
 }

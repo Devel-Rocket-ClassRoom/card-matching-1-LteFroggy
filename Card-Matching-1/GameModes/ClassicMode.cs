@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Text;
 
 sealed class ClassicMode : GameModeBase {
     private int _maxAttemptCount;
@@ -17,24 +17,24 @@ sealed class ClassicMode : GameModeBase {
                 break;
         }
     }
-    public override void PrintGameRule()
+    public override string GetGameRule()
     {
-        Console.WriteLine($"클래식 모드입니다.");
-        Console.WriteLine($"{_maxAttemptCount}회 안에 모든 짝을 맞춰야 합니다.");
-        Console.WriteLine();
+        return $"클래식 모드입니다.\n" +
+                $"{_maxAttemptCount}회 안에 모든 짝을 맞춰야 합니다.\n";
     }
 
-    public override void PrintGameResult(GameState endState) {
+    public override string GetGameResult(GameState endState) {
+        StringBuilder sb = new StringBuilder();
         if (endState == GameState.Clear) {
-            Console.WriteLine($"=== 게임 클리어 ===");
+            sb.Append($"=== 게임 클리어 ===\n");
         } else {
-            Console.WriteLine($"=== 게임 오버! ===");
-            Console.WriteLine($"시도 횟수를 모두 사용했습니다.");
-            Console.WriteLine($"찾은 쌍 : {_matchCount}/{_maxMatchCount}");
+            sb.Append($"=== 게임 오버! ===\n");
+            sb.Append($"시도 횟수를 모두 사용했습니다.\n");
+            sb.Append($"찾은 쌍 : {_matchCount}/{_maxMatchCount}\n");
         }
+        sb.Append($"총 시도 횟수 : {_attemptCount}\n");
 
-        Console.WriteLine($"총 시도 횟수 : {_attemptCount}");
-        Console.WriteLine();
+        return sb.ToString();
     }
 
     public override string UpdateGame(bool matched)
@@ -50,10 +50,9 @@ sealed class ClassicMode : GameModeBase {
         }
     }
 
-    public override void PrintStatusText()
+    public override string GetStatusText()
     {
-        Console.WriteLine($"시도 횟수 : {_attemptCount} | 찾은 쌍 : {_matchCount}/{_maxMatchCount}");
-        Console.WriteLine();
+        return $"시도 횟수 : {_attemptCount} | 찾은 쌍 : {_matchCount}/{_maxMatchCount}\n";
     }
 
     public override GameState GetGameState()

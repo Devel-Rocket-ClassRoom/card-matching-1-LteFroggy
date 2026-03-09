@@ -25,7 +25,7 @@ class GameManager {
         Console.Clear();
 
         // 게임 규칙 출력
-        _gameMode.PrintGameRule();
+        Console.WriteLine(_gameMode.GetGameRule());
 
         // 카드 미리보기 출력
         PreviewBoard();
@@ -35,7 +35,7 @@ class GameManager {
         GameState endState = MainLoop();
 
         // 게임 결과에 따른 출력
-        _gameMode.PrintGameResult(endState);
+        Console.WriteLine(_gameMode.GetGameResult(endState));
     }
 
     /// <summary>
@@ -53,7 +53,7 @@ class GameManager {
             // 유저 입력 받을 차례라면, 입력 받기
             int row, col;
             if (_board.BoardState != BoardState.Matching) {
-                _gameMode.PrintStatusText();
+                Console.WriteLine(_gameMode.GetStatusText());
 
                 // 보드판 상태와 크기에 맞게 입력 받아오기
                 Position pos = Menu.GetUserInput(_board.BoardState, _board.ColSize, _board.RowSize);

@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Text;
 
 class SurvivalMode : GameModeBase
 {
@@ -13,10 +13,9 @@ class SurvivalMode : GameModeBase
             Difficulty.Hard => 7,
         };
     }
-    public override void PrintGameRule() {
-        Console.WriteLine($"서바이벌 모드입니다.");
-        Console.WriteLine($"연속 {_maxWrongStreamCount}회 이상 틀리지 않고 모든 짝을 맞춰야 합니다.");
-        Console.WriteLine();
+    public override string GetGameRule() {
+        return $"서바이벌 모드입니다." +
+                $"연속 {_maxWrongStreamCount}회 이상 틀리지 않고 모든 짝을 맞춰야 합니다.\n";
     }
 
     public override GameState GetGameState() {
@@ -28,24 +27,24 @@ class SurvivalMode : GameModeBase
         else { return GameState.Playing; }
     }
 
-    public override void PrintGameResult(GameState endState) {
+    public override string GetGameResult(GameState endState) {
+        StringBuilder sb = new StringBuilder();
         if (endState == GameState.Clear) {
-            Console.WriteLine($"=== 게임 클리어 ===");
-            Console.WriteLine($"연속으로 {_maxWrongStreamCount}회 이상 틀리지 않고 모든 쌍을 맞췄습니다.");
+            sb.Append($"=== 게임 클리어 ===\n");
+            sb.Append($"연속으로 {_maxWrongStreamCount}회 이상 틀리지 않고 모든 쌍을 맞췄습니다.\n\n");
         } else {
-            Console.WriteLine($"=== 게임 오버! ===");
-            Console.WriteLine($"연속으로 {_wrongStreamCount}회 틀렸습니다.");
-            Console.WriteLine($"찾은 쌍 : {_matchCount}/{_maxMatchCount}");
+            sb.Append($"=== 게임 오버! ===\n");
+            sb.Append($"연속으로 {_wrongStreamCount}회 틀렸습니다.\n");
+            sb.Append($"찾은 쌍 : {_matchCount}/{_maxMatchCount}\n\n");
         }
-
-        Console.WriteLine($"총 시도 횟수 : {_attemptCount}");
-        Console.WriteLine();
+        sb.Append($"총 시도 횟수 : {_attemptCount}\n");
+        
+        return sb.ToString();
     }
 
 
-    public override void PrintStatusText() {
-        Console.WriteLine($"연속 오답 횟수 : {_wrongStreamCount}/{_maxWrongStreamCount} | 찾은 쌍 : {_matchCount}/{_maxMatchCount}");
-        Console.WriteLine();
+    public override string GetStatusText() {
+        return $"연속 오답 횟수 : {_wrongStreamCount}/{_maxWrongStreamCount} | 찾은 쌍 : {_matchCount}/{_maxMatchCount}\n";
     }
 
     public override string UpdateGame(bool matched) {

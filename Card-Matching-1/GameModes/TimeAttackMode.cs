@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 class TimeAttackMode : GameModeBase
 {
@@ -26,31 +27,29 @@ class TimeAttackMode : GameModeBase
         else { return GameState.Playing; }
     }
 
-    public override void PrintGameResult(GameState endState)
+    public override string GetGameResult(GameState endState)
     {
+        StringBuilder sb = new StringBuilder();
         if (endState == GameState.Clear) {
-            Console.WriteLine($"=== 게임 클리어 ===");
-            Console.WriteLine($"{TimePassed}초 만에 모든 쌍을 맞췄습니다.");
+            sb.Append($"=== 게임 클리어 ===\n");
+            sb.Append($"{TimePassed:F1}초 만에 모든 쌍을 맞췄습니다.\n\n");
         } else {
-            Console.WriteLine($"=== 게임 오버! ===");
-            Console.WriteLine($"{_timeLimitSeconds}초 안에 모든 쌍을 맞추지 못했습니다.");
-            Console.WriteLine($"찾은 쌍 : {_matchCount}/{_maxMatchCount}");
+            sb.Append($"=== 게임 오버! ===\n");
+            sb.Append($"{_timeLimitSeconds}초 안에 모든 쌍을 맞추지 못했습니다.\n");
+            sb.Append($"찾은 쌍 : {_matchCount}/{_maxMatchCount}\n\n");
         }
-        Console.WriteLine($"총 시도 횟수 : {_attemptCount}");
-        Console.WriteLine();        
+        sb.Append($"총 시도 횟수 : {_attemptCount}\n");
+        return sb.ToString();
     }
 
-    public override void PrintGameRule()
+    public override string GetGameRule()
     {
-        Console.WriteLine($"타임어택 모드입니다.");
-        Console.WriteLine($"{_timeLimitSeconds}초 내에 모든 쌍을 맞춰야 합니다.");
-        Console.WriteLine();
+        return $"타임어택 모드입니다.\n" +
+                $"{_timeLimitSeconds}초 내에 모든 쌍을 맞춰야 합니다.\n";
     }
 
-    public override void PrintStatusText()
-    {
-        Console.WriteLine($"경과 시간 : {TimePassed:F1}초 | 찾은 쌍 : {_matchCount}/{_maxMatchCount}");
-        Console.WriteLine();
+    public override string GetStatusText() {
+        return $"경과 시간 : {TimePassed:F1}초 | 찾은 쌍 : {_matchCount}/{_maxMatchCount}\n";
     }
 
     public override string UpdateGame(bool matched)
