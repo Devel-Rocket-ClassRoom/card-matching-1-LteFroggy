@@ -22,22 +22,11 @@ internal class Board {
         _boardSize = boardSize;
         BoardShuffler.shuffle(_boardSize, out _shuffledIdx);
     }
-
-    /// <summary>
-    /// 보드판 상태 출력용 함수. 미리보기라면 모두 오픈한 상태로 공개
-    /// </summary>
-    /// <param name="isPreview">미리보기 여부</param>
-    public void PrintBoard(bool isPreview = false) {
-        Console.Write($"    1열 2열 3열 4열");
-        for (int i = 0; i < _boardSize; i++) {
-            // colsize마다 줄바꿈
-            if (i % _colSize == 0) { 
-                Console.Write($"\n{(i / _colSize) + 1}행  ");
-            }
-            Console.ForegroundColor = _cards[_shuffledIdx[i]].GetColor(isPreview);
-            Console.Write($"{_cards[_shuffledIdx[i]].GetPrintValue(isPreview)}");
-            Console.ResetColor();
-        }
+    
+    // board[i]에 접근하면 셔플된 i번째 카드에 접근 가능
+    // BoardRenderer에서 사용
+    public ICard this[int idx] {
+        get => _cards[_shuffledIdx[idx]];
     }
 
     /// <summary>

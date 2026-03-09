@@ -5,10 +5,12 @@ class GameManager {
     private GameModeBase _gameMode;
     private int _previewTime;
     private Board _board;
+    private BoardRenderer _boardRenderer;
 
-    public GameManager(GameModeBase gameMode, GameSettings settings, Board board) {
+    public GameManager(GameModeBase gameMode, GameSettings settings, Board board, BoardRenderer boardRenderer) {
         _gameMode = gameMode;
         _board = board;
+        _boardRenderer = boardRenderer;
         _previewTime = settings.Diff switch {
             Difficulty.Easy => 5000,
             Difficulty.Normal => 3000,
@@ -44,7 +46,7 @@ class GameManager {
         do {
             // 초기 출력
             Console.Clear();
-            _board.PrintBoard();
+            _boardRenderer.RenderBoard(_board);
             Console.WriteLine();
             Console.WriteLine();
             
@@ -54,9 +56,10 @@ class GameManager {
                 _gameMode.PrintStatusText();
 
                 GetUserInput(out row, out col);
-                try {
-                    _board.FlipCard(row, col);
-                } catch (Exception e) {
+
+                // 이미 뒤집힌 카드를 다시 뒤집는 경우를 잡기 위한 try-catch
+                try { _board.FlipCard(row, col); }
+                catch (Exception e) {
                     Console.WriteLine(e.Message);
                     Thread.Sleep(500);
                     continue;
@@ -125,7 +128,8 @@ class GameManager {
     }
 
     public void PreviewBoard() {
-        _board.PrintBoard(true);
+        // isPreview를 true로 보드판 출력
+        _boardRenderer.RenderBoard(_board, true);
         Console.WriteLine();
         Console.WriteLine();
         Console.WriteLine($"잘 기억하세요! ({_previewTime / 1000}초 후 뒤집힙니다.)");

@@ -11,7 +11,8 @@ do {
 
     Board board = BoardFactory.Create(settings);
     GameModeBase gameMode = GameModeFactory.Create(settings);
-    GameManager gameManager = new GameManager(gameMode, settings, board);
+    BoardRenderer boardRenderer = new BoardRenderer();
+    GameManager gameManager = new GameManager(gameMode, settings, board, boardRenderer);
 
     gameManager.PlayGame();
 
