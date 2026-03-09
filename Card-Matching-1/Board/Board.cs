@@ -20,7 +20,7 @@ internal class Board {
     public Board(ICard[] cards, int boardSize) { 
         _cards = cards;
         _boardSize = boardSize;
-        BoardShuffler.shuffle(_boardSize, out _shuffledIdx);
+        _shuffledIdx = shuffle(_boardSize);
     }
     
     // board[i]에 접근하면 셔플된 i번째 카드에 접근 가능
@@ -78,5 +78,33 @@ internal class Board {
             _cards[_secondFlippedIdx].IsOpened = false;
             return false;
         }
+    }
+
+    /// <summary>
+    /// 사용할 카드 개수에 맞춰 인덱스를 랜덤하게 섞는다
+    /// </summary>
+    /// <param name="size">사용할 카드 더미 크기</param>
+    private int[] shuffle(int size) {
+        int[][] shuffleArr = new int[size][];
+        int[] shuffledIdx;
+        Random rand = new Random();
+
+        // 값 할당
+        for (int i = 0; i < size; i++) {
+            shuffleArr[i] = new int[2];
+            shuffleArr[i][0] = i;
+            shuffleArr[i][1] = rand.Next(1000);
+        }
+
+        // shuffle
+        Array.Sort(shuffleArr, (a, b) => a[1].CompareTo(b[1]));
+
+        // shuffledIdx에 값 저장
+        shuffledIdx = new int[size];
+        for (int i = 0; i < size; i++) {
+            shuffledIdx[i] = shuffleArr[i][0];
+        }
+
+        return shuffledIdx;
     }
 }

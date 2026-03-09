@@ -14,7 +14,7 @@ class SurvivalMode : GameModeBase
         };
     }
     public override string GetGameRule() {
-        return $"서바이벌 모드입니다." +
+        return $"서바이벌 모드입니다.\n" +
                 $"연속 {_maxWrongStreamCount}회 이상 틀리지 않고 모든 짝을 맞춰야 합니다.\n";
     }
 
