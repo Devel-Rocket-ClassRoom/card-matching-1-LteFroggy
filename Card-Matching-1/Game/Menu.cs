@@ -117,4 +117,41 @@ static class Menu {
             }
         } while(true);
     }
+
+    public static Position GetUserInput(BoardState boardState, int colSize, int rowSize = 4) {
+        int row, col;
+        do {
+            if (boardState == BoardState.WaitingFirst) {
+                Console.Write($"첫 번째 카드를 선택하세요 (행 열) : ");
+            } else if (boardState == BoardState.WaitingSecond) {
+                Console.Write($"두 번째 카드를 선택하세요 (행 열) : ");
+            }
+
+            string[] str = Console.ReadLine().Split(' ');
+            try {
+                if (Int32.TryParse(str[0], out row) && Int32.TryParse(str[1], out col)) { }
+                else {
+                    Console.WriteLine($"숫자를 입력해주세요.");
+                    Console.WriteLine();
+                    continue;
+                }
+            } catch {
+                Console.WriteLine($"띄어쓰기로 구분하여 두 개의 숫자를 입력해주세요.");
+                Console.WriteLine();
+                continue;
+            }
+
+            // row, col 인덱스 0에 맞도록 변경
+            row--; col--;
+            if (row < 0 || col < 0 || row >= rowSize || col >= colSize) {
+                Console.WriteLine($"범위에 맞는 값을 입력해주세요");
+                Console.WriteLine();
+                continue;
+            }
+
+            break;
+        } while (true);
+
+        return new Position(row, col);
+    }
 }

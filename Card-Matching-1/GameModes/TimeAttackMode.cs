@@ -30,7 +30,7 @@ class TimeAttackMode : GameModeBase
     {
         if (endState == GameState.Clear) {
             Console.WriteLine($"=== 게임 클리어 ===");
-            Console.WriteLine($"{_timeLimitSeconds}초 안에 모든 쌍을 맞췄습니다.");
+            Console.WriteLine($"{TimePassed}초 만에 모든 쌍을 맞췄습니다.");
         } else {
             Console.WriteLine($"=== 게임 오버! ===");
             Console.WriteLine($"{_timeLimitSeconds}초 안에 모든 쌍을 맞추지 못했습니다.");

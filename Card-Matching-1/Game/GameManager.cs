@@ -55,10 +55,11 @@ class GameManager {
             if (_board.BoardState != BoardState.Matching) {
                 _gameMode.PrintStatusText();
 
-                GetUserInput(out row, out col);
+                // 보드판 상태와 크기에 맞게 입력 받아오기
+                Position pos = Menu.GetUserInput(_board.BoardState, _board.ColSize, _board.RowSize);
 
                 // 이미 뒤집힌 카드를 다시 뒤집는 경우를 잡기 위한 try-catch
-                try { _board.FlipCard(row, col); }
+                try { _board.FlipCard(pos.Row, pos.Col); }
                 catch (Exception e) {
                     Console.WriteLine(e.Message);
                     Thread.Sleep(500);
@@ -86,44 +87,6 @@ class GameManager {
                 case GameState.GameOver:
                     return GameState.GameOver;
             }
-        } while (true);
-    }
-
-    /// <summary>
-    /// 유저가 어떤 위치의 카드를 뒤집을 지 값을 받는다.
-    /// </summary>
-    /// <param name="row">행</param>
-    /// <param name="col">열</param>
-    public void GetUserInput(out int row, out int col) { 
-        do {
-            if (_board.BoardState == BoardState.WaitingFirst) {
-                Console.Write($"첫 번째 카드를 선택하세요 (행 열) : ");
-            } else if (_board.BoardState == BoardState.WaitingSecond) {
-                Console.Write($"두 번째 카드를 선택하세요 (행 열) : ");
-            }
-            string[] str = Console.ReadLine().Split(' ');
-            try {
-                if (Int32.TryParse(str[0], out row) && Int32.TryParse(str[1], out col)) { }
-                else {
-                    Console.WriteLine($"숫자를 입력해주세요.");
-                    Console.WriteLine();
-                    continue;
-                }
-            } catch {
-                Console.WriteLine($"띄어쓰기로 구분하여 두 개의 숫자를 입력해주세요.");
-                Console.WriteLine();
-                continue;
-            }
-
-            // row, col 인덱스 0에 맞도록 변경
-            row--; col--;
-            if (row < 0 || col < 0 || row >= _board.RowSize || col >= _board.ColSize) {
-                Console.WriteLine($"범위에 맞는 값을 입력해주세요");
-                Console.WriteLine();
-                continue;
-            }
-
-            break;
         } while (true);
     }
 
