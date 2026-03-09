@@ -1,6 +1,6 @@
 ﻿static class CardFactory {
-    public static ICard[] Create(CardDisplayStyle skin, int size) {
-        ICard[] cards = new ICard[size];
+    public static CardBase[] Create(CardDisplayStyle skin, int size) {
+        CardBase[] cards = new CardBase[size];
         
         switch (skin) {
             case CardDisplayStyle.Number:

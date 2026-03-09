@@ -1,7 +1,7 @@
 ﻿using System;
 
 internal class Board {
-    private ICard[] _cards;
+    private CardBase[] _cards;
     private int[] _shuffledIdx;
 
     private BoardState _boardState;
@@ -17,7 +17,7 @@ internal class Board {
     public int BoardSize => _boardSize;
     public int RowSize => _boardSize / _colSize;
 
-    public Board(ICard[] cards, int boardSize) { 
+    public Board(CardBase[] cards, int boardSize) { 
         _cards = cards;
         _boardSize = boardSize;
         _shuffledIdx = shuffle(_boardSize);
@@ -25,7 +25,7 @@ internal class Board {
     
     // board[i]에 접근하면 셔플된 i번째 카드에 접근 가능
     // BoardRenderer에서 사용
-    public ICard this[int idx] {
+    public CardBase this[int idx] {
         get => _cards[_shuffledIdx[idx]];
     }
 
